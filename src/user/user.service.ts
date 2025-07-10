@@ -4,9 +4,9 @@ import { R } from 'src/common/response';
 
 @Injectable()
 export class UserService {
-  private list:Array<any>
+  private list: Array<any>;
   constructor() {
-    this.list = []
+    this.list = [];
   }
   add(name: string) {
     this.list.push({
