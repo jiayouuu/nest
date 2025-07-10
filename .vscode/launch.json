@@ -1,0 +1,21 @@
+{
+	"version": "1.0.0",
+	"configurations": [
+	{
+		"name": "Launch via NPM",
+		"request": "launch",
+		"runtimeArgs": [
+			"run-script",
+			"start:debug"
+		],
+		"runtimeExecutable": "npm",
+		"runtimeVersion": "22.14.0",
+		"internalConsoleOptions": "neverOpen",
+		"skipFiles": [
+			"<node_internals>/**"
+		],
+		"type": "node"
+	}
+	],
+	
+}
