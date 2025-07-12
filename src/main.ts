@@ -5,10 +5,14 @@ import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger: ['error'] });
+  // 获取配置服务
+  const configService = app.get(ConfigService);
+
   // 设置全局前缀
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix(configService.get('server.prefix')!);
   // 允许跨域
   app.enableCors();
+  // 设置全局管道
   app.useGlobalPipes(
     new ValidationPipe({
       // 自动去除没有在 DTO 中声明的字段
@@ -20,8 +24,6 @@ async function bootstrap() {
     }),
   );
 
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT', 6000);
-  await app.listen(port);
+  await app.listen(configService.get('server.port')!);
 }
 void bootstrap();
