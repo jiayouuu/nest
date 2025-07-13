@@ -8,10 +8,10 @@ import configuration from './configuration';
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration]
-    })
+      load: [configuration],
+    }),
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
