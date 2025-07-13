@@ -1,23 +1,27 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Query } from '@nestjs/common';
 import { UserService } from './user.service';
-import { RDTO } from './r.dto';
+import { User } from './user.entity';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('list')
-  list() {
-    return this.userService.get();
+  list(@Query() user: Partial<User>) {
+    return this.userService.getAll(user);
   }
   @Get('add')
-  add(@Query() query: { name: string }) {
-    const { name } = query;
-    return this.userService.add(name);
+  add(@Query() user: Partial<User>) {
+    return this.userService.add(user);
   }
 
-  @Post('range')
-  range(@Body() body: RDTO) {
-    return this.userService.range(body.range);
+  @Get('delete')
+  delete(@Query('id') id: string) {
+    return this.userService.delete(id);
+  }
+
+  @Get('update')
+  update(@Query('id') id: string, @Query() user: Partial<User>) {
+    return this.userService.update(id, user);
   }
 }

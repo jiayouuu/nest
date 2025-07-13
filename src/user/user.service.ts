@@ -1,27 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { nanoid } from 'nanoid';
-import { R } from 'src/common/response';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
-  private list: Array<any>;
-  constructor() {
-    this.list = [];
+  constructor(
+    @InjectRepository(User) private readonly UserRepository: Repository<User>,
+  ) {}
+  async add(user: Partial<User>) {
+    return await this.UserRepository.insert(user);
   }
-  add(name: string) {
-    this.list.push({
-      name,
-      createTime: Date.now(),
-      id: nanoid(),
-    });
-    return R.success();
+  // get(id: string) {
+  //   return this.UserRepository.findOne({ where: { id } });
+  // }
+  getAll(user: Partial<User>) {
+    return this.UserRepository.find({ where: user });
   }
-  get() {
-    return R.success(this.list);
+  update(id: string, user: Partial<User>) {
+    return this.UserRepository.update(id, user);
   }
-
-  range(r: number) {
-    const list = Array.from({ length: r }, (_, i) => (i + 1).toString());
-    return R.success(list);
+  delete(id: string) {
+    return this.UserRepository.delete(id);
   }
 }
